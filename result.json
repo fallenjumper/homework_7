@@ -16,22 +16,28 @@
             "198.50.156.189": 167812,
             "5.112.235.245": 166722
         },
-        "TOP_3_LONG": {
-            "62.93.172.245": {
+        "TOP_3_LONG": [
+            {
+                "IP": "62.93.172.245",
+                "DATE": "23/Dec/2015:07:27:57 +0100",
                 "METHOD": "POST",
                 "URL": "/administrator/index.php",
                 "TIME": "10000"
             },
-            "213.162.68.113": {
+            {
+                "IP": "213.162.68.113",
+                "DATE": "06/Jan/2016:18:47:57 +0100",
                 "METHOD": "GET",
                 "URL": "/media/system/css/modal.css",
                 "TIME": "10000"
             },
-            "194.166.55.43": {
+            {
+                "IP": "194.166.55.43",
+                "DATE": "06/Jan/2016:21:29:02 +0100",
                 "METHOD": "GET",
                 "URL": "/images/phocagallery/almhuette/thumbs/phoca_thumb_m_terasse.jpg",
                 "TIME": "10000"
             }
-        }
+        ]
     }
 }

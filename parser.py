@@ -7,22 +7,25 @@ import json
 parser = argparse.ArgumentParser(description='Parser for apache logs')
 parser.add_argument('--file', '-f', action="store",
                     help='Агрумент для указания файла(ов) с логами. Возможно передать папку.')
+parser.add_argument('--extension', '-e', action="store", default=".log",
+                    help='Агрумент для указания расширения файла логов при сканировании папок. По умолчанию: *.log')
 args = parser.parse_args()
 
 
-def get_files_list(arg):
+def get_files_list(file_arg, extension_arg):
     # check type input arg (file or dir)
-    if isfile(expanduser(arg)):
-        file_list = [expanduser(arg)]
+    if isfile(expanduser(file_arg)):
+        file_list = [expanduser(file_arg)]
     else:
         # if folder -> get all files
-        file_list = [expanduser(arg + i) for i in listdir(expanduser(arg)) if isfile(expanduser(arg + i))]
+        file_list = [expanduser(file_arg + i) for i in listdir(expanduser(file_arg)) if
+                     isfile(expanduser(file_arg + i)) and (expanduser(file_arg + i).endswith(extension_arg))]
     return file_list
 
 
 def get_logs():
-    for file in get_files_list(args.file):
-        result_lst = []
+    result_lst = []
+    for file in get_files_list(args.file, args.extension):
         with open(file, "r") as f:
             print(f"Working with {file}..")
             for line in f:
@@ -31,7 +34,7 @@ def get_logs():
                 if re.search(regex, line):
                     # parse log to list
                     result_lst.append(list(map(''.join, re.findall(r'\"(.*?)\"|\[(.*?)\]|(\S+)', line))))
-        return result_lst
+    return result_lst
 
 
 def calc_types(log_list):
@@ -58,15 +61,16 @@ def get_top3_ip(log_list):
 
 
 def get_top3_long(log_list):
-    result_dict = {}
-    # sort list by last item
+    result_lst = []
+    # sort log list by last item (time)
     for log in sorted(log_list, key=lambda x: int(x[-1]), reverse=True)[:3]:
+        DATE = log[3]
         IP = log[0]
         METHOD = log[4].split(' ')[0]
         URL = log[4].split(' ')[1]
         TIME = log[-1]
-        result_dict.update({IP: dict(METHOD=METHOD, URL=URL, TIME=TIME)})
-    return result_dict
+        result_lst.append(dict(IP=IP, DATE=DATE, METHOD=METHOD, URL=URL, TIME=TIME))
+    return result_lst
 
 
 logs = get_logs()
@@ -85,3 +89,4 @@ with open("result.json", "w") as f:
         indent=4
     )
     f.write(s)
+    f.write('\n')
