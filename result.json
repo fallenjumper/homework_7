@@ -1,7 +1,7 @@
 {
-    "RESULT_JSON": {
-        "TOTAL": 3216980,
-        "TYPES": {
+    "result_json": {
+        "TOTAL_COUNTS": 3216980,
+        "TOTAL_TYPES": {
             "GET": 2247849,
             "POST": 918794,
             "PUT": 70,
@@ -11,33 +11,128 @@
             "OPTIONS": 39,
             "INCORRECT": 159
         },
-        "TOP_3_IP": {
-            "193.106.31.130": 235209,
-            "198.50.156.189": 167812,
-            "5.112.235.245": 166722
+        "C:\\Users\\RealKi\\access.log": {
+            "COUNTS": 1906074,
+            "TYPES": {
+                "GET": 1347233,
+                "POST": 509896,
+                "PUT": 64,
+                "DELETE": 1,
+                "HEAD": 48810,
+                "PROPFIND": 16,
+                "OPTIONS": 5,
+                "INCORRECT": 49
+            },
+            "TOP_3_IP": {
+                "193.106.31.130": 168458,
+                "5.114.231.216": 158258,
+                "5.113.18.208": 157674
+            },
+            "TOP_3_LONG": [
+                {
+                    "IP": "62.93.172.245",
+                    "DATE": "23/Dec/2015:07:27:57 +0100",
+                    "METHOD": "POST",
+                    "URL": "/administrator/index.php",
+                    "TIME": "10000"
+                },
+                {
+                    "IP": "213.162.68.113",
+                    "DATE": "06/Jan/2016:18:47:57 +0100",
+                    "METHOD": "GET",
+                    "URL": "/media/system/css/modal.css",
+                    "TIME": "10000"
+                },
+                {
+                    "IP": "194.166.55.43",
+                    "DATE": "06/Jan/2016:21:29:02 +0100",
+                    "METHOD": "GET",
+                    "URL": "/images/phocagallery/almhuette/thumbs/phoca_thumb_m_terasse.jpg",
+                    "TIME": "10000"
+                }
+            ]
         },
-        "TOP_3_LONG": [
-            {
-                "IP": "62.93.172.245",
-                "DATE": "23/Dec/2015:07:27:57 +0100",
-                "METHOD": "POST",
-                "URL": "/administrator/index.php",
-                "TIME": "10000"
+        "C:\\Users\\RealKi\\sdsdf.log": {
+            "COUNTS": 492629,
+            "TYPES": {
+                "GET": 241898,
+                "POST": 250056,
+                "PUT": 6,
+                "DELETE": 0,
+                "HEAD": 552,
+                "PROPFIND": 0,
+                "OPTIONS": 7,
+                "INCORRECT": 110
             },
-            {
-                "IP": "213.162.68.113",
-                "DATE": "06/Jan/2016:18:47:57 +0100",
-                "METHOD": "GET",
-                "URL": "/media/system/css/modal.css",
-                "TIME": "10000"
+            "TOP_3_IP": {
+                "198.50.156.189": 103680,
+                "158.69.5.181": 88875,
+                "178.159.37.81": 13416
             },
-            {
-                "IP": "194.166.55.43",
-                "DATE": "06/Jan/2016:21:29:02 +0100",
-                "METHOD": "GET",
-                "URL": "/images/phocagallery/almhuette/thumbs/phoca_thumb_m_terasse.jpg",
-                "TIME": "10000"
-            }
-        ]
+            "TOP_3_LONG": [
+                {
+                    "IP": "198.50.156.189",
+                    "DATE": "01/Apr/2017:20:21:24 +0200",
+                    "METHOD": "POST",
+                    "URL": "/administrator/index.php",
+                    "TIME": "10000"
+                },
+                {
+                    "IP": "198.50.156.189",
+                    "DATE": "01/Apr/2017:21:15:23 +0200",
+                    "METHOD": "POST",
+                    "URL": "/administrator/index.php",
+                    "TIME": "10000"
+                },
+                {
+                    "IP": "198.50.156.189",
+                    "DATE": "01/Apr/2017:21:43:06 +0200",
+                    "METHOD": "POST",
+                    "URL": "/administrator/index.php",
+                    "TIME": "10000"
+                }
+            ]
+        },
+        "C:\\Users\\RealKi\\sss.log": {
+            "COUNTS": 818277,
+            "TYPES": {
+                "GET": 658718,
+                "POST": 158842,
+                "PUT": 0,
+                "DELETE": 0,
+                "HEAD": 612,
+                "PROPFIND": 78,
+                "OPTIONS": 27,
+                "INCORRECT": 0
+            },
+            "TOP_3_IP": {
+                "5.114.64.184": 94043,
+                "5.112.235.245": 92312,
+                "193.106.31.130": 66751
+            },
+            "TOP_3_LONG": [
+                {
+                    "IP": "5.112.235.245",
+                    "DATE": "27/Jun/2018:07:24:00 +0200",
+                    "METHOD": "GET",
+                    "URL": "/apache-log/access.log",
+                    "TIME": "10000"
+                },
+                {
+                    "IP": "5.112.235.245",
+                    "DATE": "27/Jun/2018:07:41:31 +0200",
+                    "METHOD": "GET",
+                    "URL": "/apache-log/access.log",
+                    "TIME": "10000"
+                },
+                {
+                    "IP": "5.112.235.245",
+                    "DATE": "27/Jun/2018:07:46:24 +0200",
+                    "METHOD": "GET",
+                    "URL": "/apache-log/access.log",
+                    "TIME": "10000"
+                }
+            ]
+        }
     }
 }
