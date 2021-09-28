@@ -1,5 +1,6 @@
 import argparse
 from os import listdir
+import collections
 from os.path import isfile, expanduser
 import re
 import json
@@ -10,6 +11,13 @@ parser.add_argument('--file', '-f', action="store",
 parser.add_argument('--extension', '-e', action="store", default=".log",
                     help='Агрумент для указания расширения файла логов при сканировании папок. По умолчанию: *.log')
 args = parser.parse_args()
+
+
+def sum_dicts_int(dict1, dict2):
+    counter = collections.Counter()
+    counter.update(dict1)
+    counter.update(dict2)
+    return dict(counter)
 
 
 def get_files_list(file_arg, extension_arg):
@@ -24,17 +32,19 @@ def get_files_list(file_arg, extension_arg):
 
 
 def get_logs():
-    result_lst = []
+    result_dict = {}
     for file in get_files_list(args.file, args.extension):
         with open(file, "r") as f:
             print(f"Working with {file}..")
+            result_dict.update({file: []})
             for line in f:
                 regex = "^(\S+) (\S+) (\S+) \[([\w:/]+\s[+\-]\d{4})\] \"(\S+) (\S+)\s*(\S+)?\s*\" (\d{3}) (\S+)"
                 # check correct format log
                 if re.search(regex, line):
-                    # parse log to list
-                    result_lst.append(list(map(''.join, re.findall(r'\"(.*?)\"|\[(.*?)\]|(\S+)', line))))
-    return result_lst
+                    # parse log to dict
+                    result_dict[file].append(list(map(''.join, re.findall(r'\"(.*?)\"|\[(.*?)\]|(\S+)', line))))
+    print("Успешно обработаны все файлы. \n\n")
+    return result_dict
 
 
 def calc_types(log_list):
@@ -74,19 +84,28 @@ def get_top3_long(log_list):
 
 
 logs = get_logs()
-print(f"Общее количество выполненных запросов: {len(logs)}")
-print(f"Количество запросов по типам. {calc_types(logs)}")
-print(f"Топ 3 IP адресов, с которых были сделаны запросы {get_top3_ip(logs)}")
-print(f"Топ 3 самых долгих запросов: \n {json.dumps(get_top3_long(logs), indent=4)}")
+result_json = {"TOTAL_COUNTS": 0, "TOTAL_TYPES": {}}
+for filename in logs.keys():
+    stats = logs[filename]
+    print(f"Статистика для файла: {filename}")
+    print(f"Общее количество выполненных запросов: {len(stats)}")
+    print(f"Количество запросов по типам. {calc_types(stats)}")
+    print(f"Топ 3 IP адресов, с которых были сделаны запросы {get_top3_ip(stats)}")
+    print(f"Топ 3 самых долгих запросов: \n {json.dumps(get_top3_long(stats), indent=4)}")
+    result_json.update({filename: dict(
+        COUNTS=len(stats),
+        TYPES=calc_types(stats),
+        TOP_3_IP=get_top3_ip(stats),
+        TOP_3_LONG=get_top3_long(stats))},
+    )
+    result_json["TOTAL_COUNTS"] += len(stats)
+    result_json["TOTAL_TYPES"] = sum_dicts_int(result_json["TOTAL_TYPES"], calc_types(stats))
+
+print("Статистика, собранная по всем файлам")
+print(f"Общее количество выполненных запросов: {result_json['TOTAL_COUNTS']}")
+print(f"Количество запросов по типам. {result_json['TOTAL_TYPES']}")
 
 # записываем результаты в result.json
 with open("result.json", "w") as f:
-    s = json.dumps({"RESULT_JSON": dict(
-        TOTAL=len(logs),
-        TYPES=calc_types(logs),
-        TOP_3_IP=get_top3_ip(logs),
-        TOP_3_LONG=get_top3_long(logs))},
-        indent=4
-    )
-    f.write(s)
+    f.write(json.dumps({"result_json": result_json}, indent=4))
     f.write('\n')
